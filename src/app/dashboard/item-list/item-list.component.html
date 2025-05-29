@@ -1,0 +1,30 @@
+<div class="item-list-container">
+  <h2>Item List</h2>
+  
+  <div class="filter-section">
+    <label for="category">Filter by Category:</label>
+    <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
+  
+  <div *ngIf="items$ | async as items; else loading">
+    <div *ngIf="items.length > 0; else noItems">
+      <div class="item-card" *ngFor="let item of items">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <p><strong>Price:</strong> ${{ item.price.toFixed(2) }}</p>
+        <p><strong>Category:</strong> {{ item.category }}</p>
+        <a [routerLink]="['/dashboard/items', item.id]">View Details</a>
+      </div>
+    </div>
+    
+    <ng-template #noItems>
+      <p>No items found in this category.</p>
+    </ng-template>
+  </div>
+  
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+</div>

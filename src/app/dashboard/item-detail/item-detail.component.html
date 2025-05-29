@@ -1,0 +1,19 @@
+<div class="item-detail-container">
+  <div *ngIf="item$ | async as item; else loading">
+    <div *ngIf="item; else notFound">
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.description }}</p>
+      <p><strong>Price:</strong> ${{ item.price.toFixed(2) }}</p>
+      <p><strong>Category:</strong> {{ item.category }}</p>
+      <a routerLink="/dashboard/items">Back to list</a>
+    </div>
+    
+    <ng-template #notFound>
+      <p>Item not found</p>
+    </ng-template>
+  </div>
+  
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+</div>

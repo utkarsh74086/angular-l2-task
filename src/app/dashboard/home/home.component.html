@@ -1,0 +1,53 @@
+<div class="home-container">
+  <div *ngIf="showWelcomeMessage" class="welcome-message">
+    <h2>Welcome to our Angular Demo App!</h2>
+    <p>You're viewing the home page</p>
+  </div>
+ <div *ngIf="isLoading; else contentLoaded">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <ng-template #contentLoaded>
+    
+    <section class="hero">
+      <h1>Angular Demo Application</h1>
+      <p>This application demonstrates various Angular features including:</p>
+      <ul>
+        <li>Authentication with JWT</li>
+        <li>Lazy Loading Modules</li>
+        <li>HTTP Client with Interceptors</li>
+        <li>*ngFor and *ngIf directives</li>
+        <li>Route Protection with AuthGuard</li>
+      </ul>
+    </section>
+
+    <section class="featured-items">
+      <h2>Featured Items</h2>
+      <div class="items-grid">
+        <div *ngFor="let item of featuredItems" class="item-card">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+          <p><strong>Price:</strong> ${{ item.price.toFixed(2) }}</p>
+          <a [routerLink]="['/dashboard/items', item.id]">View Details</a>
+        </div>
+      </div>
+      <div *ngIf="featuredItems.length === 0" class="no-items">
+        <p>No featured items available at the moment.</p>
+      </div>
+    </section>
+
+    <section class="quick-actions">
+      <h2>Quick Actions</h2>
+      <div class="action-buttons">
+        <button routerLink="/dashboard/items" class="btn btn-primary">
+          Browse All Items
+        </button>
+        <button *ngIf="!(authService.isAuthenticated$ | async)" 
+                routerLink="/auth/login" 
+                class="btn btn-secondary">
+          Login
+        </button>
+      </div>
+    </section>
+  </ng-template>
+</div>
